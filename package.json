@@ -1,0 +1,23 @@
+{
+  "name": "yet-js-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OleksandrMoldovan/yet-js-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/OleksandrMoldovan/yet-js-automation/issues"
+  },
+  "homepage": "https://github.com/OleksandrMoldovan/yet-js-automation#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1"
+  }
+}
