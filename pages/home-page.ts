@@ -1,22 +1,15 @@
-import { Page, Locator } from '@playwright/test'
-import { BasePage } from './base-page'
-
-
+import { Page, Locator } from '@playwright/test';
+import { BasePage } from './base-page';
 export class HomePage extends BasePage {
-  titleLocator:Locator 
+  titleLocator: Locator; 
   
   constructor(page: Page) {
-    super(page)
-    this.titleLocator= this.page.locator('h1[data-test = \'page-title\']')
+    super(page);
+    this.titleLocator = this.page.locator('h1[data-test ="page-title"]');
   }
 
-
-  async navigate() {
-    await this.page.goto('https://practicesoftwaretesting.com/')
-  }
-
-  async openPageByAltText(productNameToNavigate:string='Combination Pliers') {
+  async clickProduct(productNameToNavigate: string) {
     
-    await this.page.locator(`.card-img-top[alt = '${productNameToNavigate}']`).click()
+    await this.page.locator(`.card-img-top[alt = '${productNameToNavigate}']`).click();
   }
 }
