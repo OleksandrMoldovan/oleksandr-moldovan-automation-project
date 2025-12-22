@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test":"npx playwright test"
+    "lint": "npx eslint .",
+    "lint:fix": "npx eslint . --fix",
+    "test:Login": "npx playwright test tests/Test-1-Verify-login-with-valid-credentials.spec.ts",
+    "test2:View Product Details": "npx playwright test tests/Test-2-Verify-user-can-view-product-details.spec.ts",
+    "test": "npx playwright test"
   },
   "repository": {
     "type": "git",
@@ -19,7 +23,14 @@
   },
   "homepage": "https://github.com/OleksandrMoldovan/yet-js-automation#readme",
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
-    "@types/node": "^24.10.1"
+    "@stylistic/eslint-plugin": "^5.6.1",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.39.2",
+    "eslint-plugin-check-file": "^3.3.1",
+    "eslint-plugin-playwright": "^2.4.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.0"
   }
 }
