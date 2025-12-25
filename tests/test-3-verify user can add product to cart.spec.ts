@@ -23,10 +23,9 @@ test.describe('test-3-verify user can add product to cart.spec', ()=>{
     
     //Assert: 2
     await currentProductPage.addToCart.click();
-    await expect( currentProductPage.productAddedContainer).toHaveText('Product added to shopping cart');
-    await expect (currentProductPage.productAddedContainer).toBeHidden({ timeout:8_000 });
-    await expect; 
-    // 4. Verify cart icon in navigation shows quantity = 1.
-    await expect(currentProductPage.addToFavorites).toBeVisible();
+    await expect( currentProductPage.productAddedMessage).toHaveText('Product added to shopping cart');
+    await expect (currentProductPage.productAddedMessage).toBeHidden({ timeout:8_000 });
+    await expect(currentProductPage.header.cartBadge).toHaveValue('1');
+
   });
 });

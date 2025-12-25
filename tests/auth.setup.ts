@@ -1,6 +1,6 @@
 import { test as setup } from '@playwright/test';
-import path from 'path';
-import { LoginPage } from '../pages/login-page';
+// import path from 'path';
+// import { LoginPage } from '../pages/login-page';
 
 // I have prepared 2 options for auth. IS IT CORRECT TO DO IN SUCH WAY BECAUSE BOTH OF THEM WORK
 //1 OPTION

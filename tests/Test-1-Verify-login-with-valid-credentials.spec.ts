@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { LoginPage } from '../pages/login-page';
+// import { LoginPage } from '../pages/login-page';
 import { AccountPage } from '../pages/my-account-page';
 
 test.use({ storageState:'playwright/.auth/admin.json' });
