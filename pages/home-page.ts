@@ -5,7 +5,7 @@ export class HomePage extends BasePage {
   
   constructor(page: Page) {
     super(page);
-    this.titleLocator = this.page.locator('h1[data-test ="page-title"]');
+    this.titleLocator = this.page.locator('[data-test ="page-title"]');
   }
 
   async clickProduct(productNameToNavigate: string) {

@@ -6,8 +6,9 @@
   "scripts": {
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix",
-    "test:Login": "npx playwright test tests/Test-1-Verify-login-with-valid-credentials.spec.ts",
+    "test:Login": "npx playwright test tests/Test-1-Verify-login-with-valid-credentials.spec.ts --ui",
     "test2:View Product Details": "npx playwright test tests/Test-2-Verify-user-can-view-product-details.spec.ts",
+    "auth":"npx playwright test tests/auth.setup.ts --project=setup",
     "test": "npx playwright test"
   },
   "repository": {

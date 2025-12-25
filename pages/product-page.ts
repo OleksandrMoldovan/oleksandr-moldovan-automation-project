@@ -7,6 +7,7 @@ export class ProductPage extends BasePage {
   unitPrice: Locator;
   addToCart: Locator;
   addToFavorites: Locator;
+  productAddedContainer: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -14,6 +15,7 @@ export class ProductPage extends BasePage {
     this.unitPrice = this.page.locator('[data-test="unit-price"]');
     this.addToCart = this.page.locator('#btn-add-to-cart');
     this.addToFavorites = this.page.locator('#btn-add-to-favorites');
+    this.productAddedContainer = this.page.locator('#toast-container');
 
   }
 
