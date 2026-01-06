@@ -16,26 +16,25 @@ test.describe('test-3-verify user can add product to cart.spec', ()=>{
     await homePage.navigate();
     await homePage.clickProduct(productNameCombination);
 
-    console.log('URL after click:', page.url());
     const currentProductPage = new ProductPage(page);
 
-    //Assert: 1
+    //Assert: 1  Verify URL contains https://practicesoftwaretesting.com/product.
     await expect(currentProductPage.page).toHaveURL(/\/product\/.+/);  
     await expect(currentProductPage.productName).toHaveText(productNameCombination);
     await expect(currentProductPage.unitPrice).toHaveText(productPrice);  
     
-    //Assert: 2
+    //Assert: 2 Verify alert message is visible.
     await currentProductPage.addToCart.click();
     await expect( currentProductPage.productAddedMessage).toHaveText(messageText);
     await expect (currentProductPage.productAddedMessage).toBeHidden({ timeout:8_000 });
     await expect(currentProductPage.header.cartBadge).toHaveText('1');
     
-    ///Assert: 3
+    ///Assert: 3 Click on the cart icon in the navigation.
     const currentCheckout = new CheckoutPage(page);
 
     await currentProductPage.header.cart.click();
     await expect( currentProductPage.page).toHaveURL('/checkout');
-    expect (currentCheckout.cartQuantity).toBe('1');
+    await expect (currentCheckout.cartQuantity).toHaveValue('1');
     await expect(currentCheckout.productTitle).toHaveText(productNameCombination);
     await expect(currentCheckout.proceedToCheckoutButton).toBeVisible();
   });

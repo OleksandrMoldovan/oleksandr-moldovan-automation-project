@@ -1,16 +1,18 @@
 import { expect, test } from '@playwright/test';
 import { HomePage } from '../pages/home-page';
-import { sortTitles } from './data/sorting-options';
+import { SortTitles } from './data/sorting-options';
 
-function expectedSortedTitles(values: string[], option: string): string[] {
-  const copy = [...values];
+const sortTitlesOptions = Object.values(SortTitles);
 
-  copy.sort((a, b) => a.localeCompare(b));
+;
 
-  return option.endsWith(',desc') ? copy.reverse() : copy;
+function expectedSortedTitles(values: string[], option: SortTitles): string[] {
+  const copy = [...values].sort((a, b) => a.localeCompare(b));
+
+  return option === SortTitles.NameDesc ? copy.reverse() : copy;
 }
 
-sortTitles.forEach((option) => {
+for (const option of sortTitlesOptions) {
   test(`should sort products by ${option}`, async ({ page }) => {
     const homePage = new HomePage(page);
 
@@ -18,7 +20,7 @@ sortTitles.forEach((option) => {
 
     const before = await homePage.getProductTitles();
 
-    await homePage.sortPanel.selectSortOption(option);
+    await homePage.sortPanel.sortByTitle(option);
 
     const after = await homePage.getProductTitles();
 
@@ -26,4 +28,4 @@ sortTitles.forEach((option) => {
 
     expect(after).toEqual(expected);
   });
-});
+}

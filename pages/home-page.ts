@@ -1,15 +1,18 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { SortProducts,FilterPanel } from '../components/filter-sorting-panel';
+import { SortProducts } from '../components/sorting-panel';
+import { FilterPanel } from '../components/filter-panel';
 
 export class HomePage extends BasePage {
   readonly productTitles: Locator;
   readonly sortPanel: SortProducts;
   readonly filterPanel: FilterPanel;
+  readonly productPrices: Locator;
 
   constructor(page: Page) {
     super(page);
     this.productTitles = this.page.locator('[data-test="product-name"]');
+    this.productPrices = this.page.locator('[data-test="product-price"]');
     this.sortPanel = new SortProducts(page);
     this.filterPanel = new FilterPanel(page);
   }
@@ -22,5 +25,12 @@ export class HomePage extends BasePage {
     const titles = await this.productTitles.allTextContents();
 
     return titles.map(t => t.trim()).filter(Boolean);
+  }
+
+  async getProductPrices(): Promise<number[]> {
+    const raw = await this.productPrices.allTextContents();
+
+    return raw.map(v => Number(v.replace(/[^0-9.]/g, '')));
+
   }
 }

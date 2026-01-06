@@ -6,11 +6,7 @@ import { HomePage } from '../pages/home-page';
 test('Verify user can view product details', async ({ page }) => {
 
   const productNameCombination = 'Combination Pliers';
-  const productPrice = '14.15';
-  // const loginPage = new LoginPage(page);
-
-  // await loginPage.performLogin('customer@practicesoftwaretesting.com', 'welcome01');
- 
+  const productPrice = '14.15'; 
   const homePage = new HomePage(page);
 
   await homePage.navigate();
