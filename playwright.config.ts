@@ -42,9 +42,9 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         // Use prepared auth state.
-        storageState: 'playwright/.auth/admin.json',
+        // storageState: 'playwright/.auth/admin.json',
       },
-      dependencies: ['setup'],
+      // dependencies: ['setup'],
     },
 
     {
