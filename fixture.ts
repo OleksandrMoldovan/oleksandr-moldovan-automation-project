@@ -1,39 +1,30 @@
 import { test as base, Page } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
-import { AccountPage } from './pages/my-account-page';
+import { AllPages } from './pages/all-pages';
+import { credentials } from './tests/data/user-creds';
 
 type MyFixtures = {
-  loggedInPage: Page;
-  accountPage: AccountPage
-  loginPage: LoginPage
+  loggedInPage: AllPages;
+  allPages: AllPages
 };
 
 export const test = base.extend<MyFixtures>({
-  loggedInPage: async ({ page }, use) => {
+  loggedInPage: async ({ allPages }, use) => {
     //set up
     console.log('Before');
-    const loginPage = new LoginPage(page);
 
-    await loginPage.navigate('/auth/login');
-    const password: string = 'welcome01';
-    const email: string = 'customer@practicesoftwaretesting.com';
-
-    await loginPage.performLogin(email,password);
+    await allPages.loginPage.navigate('/auth/login');
+    await allPages.loginPage.performLogin(credentials.customer.email,credentials.customer.password);
 
     //use fixtures values
-    await use(page);
+    await use(allPages);
     console.log('After');
     //clean up
   },
-  loginPage:async({ page },use) => {
-    const loginPage = new LoginPage(page);
-
-    await use(loginPage);
+  allPages:async({ page },use) => {
   
-  },
-  accountPage:async({ page },use)=>{
-    const accountPage = new AccountPage(page);
+    const allPages = new AllPages(page);
 
-    await use(accountPage);
+    await use(allPages);
   },
 });
