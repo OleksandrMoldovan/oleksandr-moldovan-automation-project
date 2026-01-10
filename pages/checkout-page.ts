@@ -7,9 +7,9 @@ export class CheckoutPage extends BasePage{
   proceedToCheckoutButton: Locator;
   constructor(page: Page){
     super(page);
-    this.cartQuantity = this.page.locator('[data-test="product-quantity"]');
-    this.productTitle = this.page.locator('[data-test="product-title"]');
-    this.proceedToCheckoutButton = this.page.locator('[data-test="proceed-1"]');
+    this.cartQuantity = this.page.getByTestId('product-quantity'); 
+    this.productTitle = this.page.getByTestId('product-title');
+    this.proceedToCheckoutButton = this.page.getByTestId('proceed-1');
   }
   
 }

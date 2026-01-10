@@ -11,8 +11,8 @@ export class HomePage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.productTitles = this.page.locator('[data-test="product-name"]');
-    this.productPrices = this.page.locator('[data-test="product-price"]');
+    this.productTitles = this.page.getByTestId('product-name');
+    this.productPrices = this.page.getByTestId('product-price');
     this.sortPanel = new SortProducts(page);
     this.filterPanel = new FilterPanel(page);
   }
