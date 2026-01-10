@@ -4,15 +4,17 @@ import { BasePage } from './base-page';
 export class LoginPage extends BasePage{
   emailLocator: Locator; 
   passwordLocator: Locator; 
-  // email:string = 'customer@practicesoftwaretesting.com'
-  // password:string = 'welcome01'
+  // email: string = 'customer@practicesoftwaretesting.com';
+  // password: string = 'welcome01';
   submitBtnLocator: Locator;
+  loginPageUrl: string;
 
   constructor(page: Page) {
     super(page);
     this.emailLocator = this.page.locator('#email');
     this.passwordLocator = this.page.locator('#password');
     this.submitBtnLocator = this.page.locator('.btnSubmit');
+    this.loginPageUrl = '/auth/login';
     
   }
 
