@@ -18,8 +18,9 @@ export class Header{
     this.contact = this.page.locator('li.nav-item [data-test="nav-contact"]');
     this.signIn = this.page.locator('li.nav-item [data-test="nav-sign-in"]');
     this.languageSwitcher = this.page.locator('.btn-group dropdown');
+    this.cart = this.page.locator('[data-icon="cart-shopping"]');
     this.cart = this.page.getByTestId('nav-cart');
-    this.cartBadge = this.page.locator('[data-test="cart-quantity"]');
+    this.cartBadge = this.page.getByTestId('cart-quantity');
   }
 
 }

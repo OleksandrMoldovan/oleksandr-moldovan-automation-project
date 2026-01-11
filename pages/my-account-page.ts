@@ -1,6 +1,5 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from './base-page';
-// import { LoginPage } from '../pages/login-page'
 
 export class AccountPage extends BasePage {
   
@@ -8,6 +7,6 @@ export class AccountPage extends BasePage {
   
   constructor(page: Page) {
     super(page);
-    this.titleLocator = this.page.locator('[data-test = "page-title"]');
+    this.titleLocator = this.page.getByTestId('page-title');
   }
 }
