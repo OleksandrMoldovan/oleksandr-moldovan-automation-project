@@ -13,6 +13,6 @@ test('Verify user can view product details', async ({ allPages }) => {
   await expect(allPages.productPage.productName).toHaveText(productNameCombination);
 
   await expect(allPages.productPage.unitPrice).toHaveText(productPrice);
-  await expect(allPages.productPage.addToCart).toBeVisible();
+  await expect(allPages.productPage.addToCartBtn).toBeVisible();
   await expect(allPages.productPage.addToFavorites).toBeVisible();
 });

@@ -13,6 +13,7 @@ export class HomePage extends BasePage {
     super(page);
     this.productTitles = this.page.locator('[data-test="product-name"]');
     this.productPrices = this.page.locator('[data-test="product-price"]');
+    // this.sortPanel = new SortProducts(this.page); !!!!!!!!!!!!!!!!!!!  WHAT IS THE DIFFERENCE BETWEEN THIS ONE AND BELOW I CAN'T UNDERSTAND
     this.sortPanel = new SortProducts(page);
     this.filterPanel = new FilterPanel(page);
   }
@@ -33,4 +34,8 @@ export class HomePage extends BasePage {
     return raw.map(v => Number(v.replace(/[^0-9.]/g, '')));
 
   }
+  async openFirstProduct(){
+    await this.page.locator('a.card:nth-child(1)').click();
+  }
+
 }

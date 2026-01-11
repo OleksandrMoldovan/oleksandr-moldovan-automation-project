@@ -1,5 +1,4 @@
 import { test as base, Page } from '@playwright/test';
-import { LoginPage } from './pages/login-page';
 import { AllPages } from './pages/all-pages';
 import { credentials } from './tests/data/user-creds';
 

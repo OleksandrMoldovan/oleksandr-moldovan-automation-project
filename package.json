@@ -12,7 +12,7 @@
     "test:sort-name-a/desc": "npx playwright test tests/test-4-products-sorting-name.spec.ts --ui",
     "test:sort-price-a/desc": "npx playwright test tests/test-5-products-sorting-price.spec.ts --ui",
     "test:products-filtering": "npx playwright test tests/test-6-products-filtering-by-category.spec.ts --ui",
-    "test:1":"npx playwright test tests/test-1-verify-login-with-fixtures.spec.ts --ui",
+    "w:13test:7":"npx playwright test tests/week-13/test-7-add-products-e2e.spec.ts --ui",
     
     "auth":"npx playwright test tests/auth.setup.ts --project=setup",
     "test": "npx playwright test"

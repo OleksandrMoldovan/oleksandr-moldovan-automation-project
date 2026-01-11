@@ -17,7 +17,7 @@ test.describe('test-3-verify user can add product to cart.spec', ()=>{
     await expect(allPages.productPage.unitPrice).toHaveText(productPrice);  
     
     //Assert: 2 Verify alert message is visible.
-    await allPages.productPage.addToCart.click();
+    await allPages.productPage.addToCartBtn.click();
     await expect( allPages.productPage.productAddedMessage).toHaveText(messageText);
     await expect (allPages.productPage.productAddedMessage).toBeHidden({ timeout:8_000 });
     await expect(allPages.productPage.header.cartBadge).toHaveText('1');
@@ -26,8 +26,8 @@ test.describe('test-3-verify user can add product to cart.spec', ()=>{
 
     await allPages.productPage.header.cart.click();
     await expect( allPages.productPage.page).toHaveURL('/checkout');
-    await expect (allPages.checkoutPage.cartQuantity).toHaveValue('1');
-    await expect(allPages.checkoutPage.productTitle).toHaveText(productNameCombination);
-    await expect(allPages.checkoutPage.proceedToCheckoutButton).toBeVisible();
+    await expect (allPages.cartPage.cartQuantity).toHaveValue('1');
+    await expect(allPages.cartPage.productTitle).toHaveText(productNameCombination);
+    await expect(allPages.cartPage.proceedToCheckoutButton).toBeVisible();
   });
 });
