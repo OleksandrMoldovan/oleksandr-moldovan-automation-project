@@ -1,4 +1,4 @@
-import { test as base, Page } from '@playwright/test';
+import { test as base, expect,Page } from '@playwright/test';
 import { AllPages } from './pages/all-pages';
 import { credentials } from './tests/data/user-creds';
 
@@ -20,6 +20,7 @@ export const test = base.extend<MyFixtures>({
     console.log('After');
     //clean up
   },
+  
   allPages:async({ page },use) => {
   
     const allPages = new AllPages(page);
