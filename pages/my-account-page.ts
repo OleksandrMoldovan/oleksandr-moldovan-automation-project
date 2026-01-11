@@ -8,7 +8,6 @@ export class AccountPage extends BasePage {
   
   constructor(page: Page) {
     super(page);
-    this.page = page;
-    this.titleLocator = this.page.locator('h1[data-test = "page-title"]');
+    this.titleLocator = this.page.getByTestId('page-title');
   }
 }

@@ -8,7 +8,8 @@ export class Header{
   contact: Locator;
   signIn: Locator;
   languageSwitcher: Locator;
-  
+  cartBadge: Locator;
+  cart: Locator;
   constructor(page: Page) {
     this.page = page;
     this.header = this.page.locator('app-header');
@@ -17,6 +18,8 @@ export class Header{
     this.contact = this.page.locator('li.nav-item [data-test="nav-contact"]');
     this.signIn = this.page.locator('li.nav-item [data-test="nav-sign-in"]');
     this.languageSwitcher = this.page.locator('.btn-group dropdown');
+    this.cart = this.page.locator('[data-icon="cart-shopping"]');
+    this.cartBadge = this.page.locator('[data-test="cart-quantity"]');
   }
 
 }
