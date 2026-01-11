@@ -37,9 +37,6 @@ export default defineConfig({
     // Setup project
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
 
-    // Setup project
-    { name: 'setup', testMatch: /.*\.setup\.ts/ },
-
     {
       name: 'chromium',
       use: {
@@ -57,13 +54,6 @@ export default defineConfig({
         // Use prepared auth state.
         storageState: 'playwright/.auth/admin.json',
       },
-      dependencies: ['setup'],
-      use: {
-        ...devices['Desktop Firefox'],
-        // Use prepared auth state.
-        storageState: 'playwright/.auth/admin.json',
-      },
-      dependencies: ['setup'],
     },
 
     /* Test against mobile viewports. */
