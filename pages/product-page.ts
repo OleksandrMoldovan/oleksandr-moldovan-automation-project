@@ -13,8 +13,6 @@ export class ProductPage extends BasePage {
     super(page);
     this.productName = this.page.getByTestId('product-name');
     this.unitPrice = this.page.getByTestId('unit-price');
-    // this.productName = this.page.locator('data-test="product-name"');
-    // this.unitPrice = this.page.locator('data-test="unit-price"');
     this.addToCartBtn = this.page.locator('#btn-add-to-cart');
     this.addToFavorites = this.page.locator('#btn-add-to-favorites');
     this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');//create indep component for it
@@ -22,8 +20,8 @@ export class ProductPage extends BasePage {
   }
   async collectProductData(){
     const productData = {
-      name: await this.productName.innerText(),
-      price:await this.unitPrice.innerText(),
+      name: (await this.productName.innerText()),
+      price:(await this.unitPrice.innerText()),
     };
 
     return productData;

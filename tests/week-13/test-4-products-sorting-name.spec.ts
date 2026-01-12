@@ -4,8 +4,6 @@ import { test } from '../../fixture';
 
 const sortTitlesOptions = Object.values(SortTitles);
 
-;
-
 function expectedSortedTitles(values: string[], option: SortTitles): string[] {
   const copy = [...values].sort((a, b) => a.localeCompare(b));
 

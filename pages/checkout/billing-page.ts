@@ -18,6 +18,6 @@ export class BillingPage extends BasePage{
     await this.state.fill(state);
   }
   async fillInPostalCodeData(postalCode: string){
-    await this.state.fill(postalCode);
+    await this.postalCode.fill(postalCode);
   }
 }

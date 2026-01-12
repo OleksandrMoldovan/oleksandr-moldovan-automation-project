@@ -4,8 +4,6 @@ import { BasePage } from './base-page';
 export class LoginPage extends BasePage{
   emailLocator: Locator; 
   passwordLocator: Locator; 
-  // email: string = 'customer@practicesoftwaretesting.com';
-  // password: string = 'welcome01';
   submitBtnLocator: Locator;
   loginPageUrl: string;
 
@@ -18,11 +16,14 @@ export class LoginPage extends BasePage{
     
   }
 
-  async performLogin(email: string, password: string): Promise<void>{
-   
+  async performLogin(email: string, password: string): Promise<void> {
     await this.emailLocator.fill(email);
     await this.passwordLocator.fill(password);
-    await this.submitBtnLocator.click();
-  }
 
+    await Promise.all([
+      this.page.waitForURL(url => !url.toString().includes('/auth/login'), { timeout: 15_000 }),
+      this.submitBtnLocator.click(),
+    ]);
+
+  }
 }

@@ -7,7 +7,7 @@ export class SortProducts {
 
   constructor(page: Page) {
     this.page = page;
-    this.sortDropDown = this.page.locator('[data-test="sort"]');
+    this.sortDropDown = this.page.getByTestId('sort');
   }
 
   async sortByTitle(option: SortTitles) {

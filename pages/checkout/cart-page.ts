@@ -11,7 +11,7 @@ export class CartPage extends BasePage{
   constructor(page: Page){
     super(page);
     this.cartQuantity = this.page.locator('[data-test="product-quantity"]');
-    this.productTitle = this.page.locator('[data-test="product-title"]');
+    this.productTitle = this.page.getByTestId('product-title');
     this.proceedToCheckoutButton = this.page.locator('[data-test="proceed-1"]');
     this.totalPrice = this.page.getByTestId('cart-total');
     this.productPrice = this.page.getByTestId('product-price');
@@ -19,8 +19,8 @@ export class CartPage extends BasePage{
   }
   async collectCartProductData(){
     const productData = {
-      name: await this.productTitle.innerText(),
-      price:await this.productPrice.innerText(),
+      name: (await this.productTitle.innerText()).trim(),
+      price:(await this.productPrice.innerText()).replace(/[^\d.]/g, ''),
     };
 
     return productData;

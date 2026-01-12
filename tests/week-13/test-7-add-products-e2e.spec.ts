@@ -18,7 +18,7 @@ test('Add product e2e flow', async ({ loggedInPage }) => {
   const productDataCart = await loggedInPage.cartPage.collectCartProductData();
 
   expect(productData).toEqual(productDataCart);
-  expect(productData.price).toEqual(loggedInPage.cartPage.totalPrice);
+  expect(productData.price).toEqual((await loggedInPage.cartPage.totalPrice.innerText()).replace(/[^\d.]/g, ''));
 
   // Click Proceed to checkout
   await loggedInPage.cartPage.proceedToCheckoutButton.click();

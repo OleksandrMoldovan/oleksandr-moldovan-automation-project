@@ -25,16 +25,16 @@ test.describe('test-3-verify user can add product to cart.spec', ()=>{
     
     //Assert: 2 Verify alert message is visible.
     await currentProductPage.addToCartBtn.click();
-    await expect( currentProductPage.productAddedMessage).toHaveText(messageText);
-    await expect (currentProductPage.productAddedMessage).toBeHidden({ timeout:8_000 });
+    await expect(currentProductPage.productAddedMessage).toHaveText(messageText);
+    await expect(currentProductPage.productAddedMessage).toBeHidden({ timeout:8_000 });
     await expect(currentProductPage.header.cartBadge).toHaveText('1');
     
     ///Assert: 3 Click on the cart icon in the navigation.
     const currentCheckout = new CartPage(page);
 
     await currentProductPage.header.cart.click();
-    await expect( currentProductPage.page).toHaveURL('/checkout');
-    await expect (currentCheckout.cartQuantity).toHaveValue('1');
+    await expect(currentProductPage.page).toHaveURL('/checkout');
+    await expect(currentCheckout.cartQuantity).toHaveValue('1');
     await expect(currentCheckout.productTitle).toHaveText(productNameCombination);
     await expect(currentCheckout.proceedToCheckoutButton).toBeVisible();
   });
