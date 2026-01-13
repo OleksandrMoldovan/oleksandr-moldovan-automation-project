@@ -45,7 +45,7 @@ export default defineConfig({
         // Use prepared auth state.
         // storageState: 'playwright/.auth/admin.json',
       },
-      // dependencies: ['setup'],
+      dependencies: ['setup'],
     },
 
     {

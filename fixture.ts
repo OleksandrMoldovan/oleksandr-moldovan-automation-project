@@ -8,16 +8,18 @@ type MyFixtures = {
 };
 
 export const test = base.extend<MyFixtures>({
-  loggedInPage: async ({ allPages }, use) => {
+  loggedInPage: async ({ browser }, use) => {
     //set up
     console.log('Before');
+    const context = await browser.newContext({ storageState: 'playwright/.auth/e2e-user.json' });
 
-    await allPages.loginPage.navigate('/auth/login');
-    await allPages.loginPage.performLogin(credentials.customer.email,credentials.customer.password);
+    const page = await context.newPage();
+    const authedPages = new AllPages(page);
 
     //use fixtures values
-    await use(allPages);
+    await use(authedPages);
     console.log('After');
+    await context.close();
     //clean up
   },
   
@@ -28,3 +30,18 @@ export const test = base.extend<MyFixtures>({
     await use(allPages);
   },
 });
+
+/// left it as example
+// export const test = base.extend<MyFixtures>({
+//   loggedInPage: async ({ allPages }, use) => {
+//     //set up
+//     console.log('Before');
+
+//     await allPages.loginPage.navigate('/auth/login');
+//     await allPages.loginPage.performLogin(credentials.customer.email,credentials.customer.password);
+
+//     //use fixtures values
+//     await use(allPages);
+//     console.log('After');
+//     //clean up
+//   },
