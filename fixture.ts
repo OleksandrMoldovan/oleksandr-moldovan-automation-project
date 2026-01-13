@@ -1,6 +1,6 @@
 import { test as base, expect,Page } from '@playwright/test';
 import { AllPages } from './pages/all-pages';
-import { credentials } from './tests/data/user-creds';
+//import { credentials } from './tests/data/user-creds'; ---- part related to commented example
 
 type MyFixtures = {
   loggedInPage: AllPages;
@@ -10,7 +10,6 @@ type MyFixtures = {
 export const test = base.extend<MyFixtures>({
   loggedInPage: async ({ browser }, use) => {
     //set up
-    console.log('Before');
     const context = await browser.newContext({ storageState: 'playwright/.auth/e2e-user.json' });
 
     const page = await context.newPage();
@@ -18,7 +17,7 @@ export const test = base.extend<MyFixtures>({
 
     //use fixtures values
     await use(authedPages);
-    console.log('After');
+
     await context.close();
     //clean up
   },

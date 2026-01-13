@@ -10,12 +10,12 @@ export class CartPage extends BasePage{
   // cartToCheckout: Locator;
   constructor(page: Page){
     super(page);
-    this.cartQuantity = this.page.locator('[data-test="product-quantity"]');
+    this.cartQuantity = this.page.getByTestId('product-quantity');
     this.productTitle = this.page.getByTestId('product-title');
-    this.proceedToCheckoutButton = this.page.locator('[data-test="proceed-1"]');
+    this.proceedToCheckoutButton = this.page.getByTestId('proceed-1');
     this.totalPrice = this.page.getByTestId('cart-total');
     this.productPrice = this.page.getByTestId('product-price');
-    // this.cartToCheckout = this.page.getByTestId('nav-cart'); ----- delete?
+
   }
   async collectCartProductData(){
     const productData = {

@@ -5,6 +5,4 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-tests/playwright/.auth/
-tests/playwright/.auth/admin.json
-tests/playwright/.auth/basicUser.json
+/tests/playwright/.auth

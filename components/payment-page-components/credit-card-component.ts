@@ -15,11 +15,11 @@ export class CreditCard extends BasePage{
     this.cardHolderName = this.page.locator('#card_holder_name');
 
   }
-  async fillCreditCardForm(CardNumber: string, expDate: string, cvv: string, HolderName: string): Promise<void>{
-    await this.creditCardNumber.fill(CardNumber);
+  async fillCreditCardForm(cardNumber: string, expDate: string, cvv: string, holderName: string): Promise<void>{
+    await this.creditCardNumber.fill(cardNumber);
     await this.expirationDate.fill(expDate);
     await this.cvv.fill(cvv);
-    await this.cardHolderName.fill(HolderName);
+    await this.cardHolderName.fill(holderName);
 
   }
 }
