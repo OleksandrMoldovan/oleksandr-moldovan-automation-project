@@ -42,7 +42,7 @@ test('Add product e2e flow', async ({ loggedInPage }) => {
   await loggedInPage.paymentPage.selectCreditCard();
   await loggedInPage.paymentPage.creditCardComponent.fillCreditCardForm(
     '1111-1111-1111-1111',
-    '05/2026',
+    loggedInPage.paymentPage.addHalfYearFromToday(),
     '111',
     'Afanasij',
   );

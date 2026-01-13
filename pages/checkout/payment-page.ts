@@ -26,4 +26,11 @@ export class PaymentPage extends BasePage{
   async confirmCheckout(){
     await this.confirmButton.click();
   }
+  addHalfYearFromToday(): string{
+    const date = new Date();
+    const month  = String (date.getMonth() + 6).padStart(2,'0');
+    const year  = String (date.getFullYear());
+
+    return `${month}/${year}`;
+  } 
 }
