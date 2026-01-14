@@ -33,4 +33,8 @@ export class HomePage extends BasePage {
     return raw.map(v => Number(v.replace(/[^0-9.]/g, '')));
 
   }
+  async openFirstProduct(){
+    await this.page.locator('a.card:nth-child(1)').click();
+  }
+
 }

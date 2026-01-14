@@ -30,6 +30,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    testIdAttribute: 'data-test',
   },
 
   /* Configure projects for major browsers */
@@ -42,7 +43,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         // Use prepared auth state.
-        storageState: 'playwright/.auth/admin.json',
+        // storageState: 'playwright/.auth/admin.json',
       },
       dependencies: ['setup'],
     },
@@ -54,10 +55,9 @@ export default defineConfig({
         // Use prepared auth state.
         storageState: 'playwright/.auth/admin.json',
       },
-      dependencies: ['setup'],
     },
 
-    /* Test against mobile viewports. */
+    // /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
     //   use: { ...devices['Pixel 5'] },
@@ -67,7 +67,7 @@ export default defineConfig({
     //   use: { ...devices['iPhone 12'] },
     // },
 
-    /* Test against branded browsers. */
+    // /* Test against branded browsers. */
     // {
     //   name: 'Microsoft Edge',
     //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
