@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../../pages/base-page';
+import { dummyCardData } from '../../tests/data/checkout-page-data/credit-card';
 
 export class CreditCard extends BasePage{
   creditCardNumber: Locator;
@@ -15,11 +16,10 @@ export class CreditCard extends BasePage{
     this.cardHolderName = this.page.locator('#card_holder_name');
 
   }
-  async fillCreditCardForm(cardNumber: string, expDate: string, cvv: string, holderName: string): Promise<void>{
-    await this.creditCardNumber.fill(cardNumber);
-    await this.expirationDate.fill(expDate);
-    await this.cvv.fill(cvv);
-    await this.cardHolderName.fill(holderName);
-
+  async fillCreditCardForm(): Promise<void>{
+    await this.creditCardNumber.fill(dummyCardData.number);
+    await this.expirationDate.fill(dummyCardData.expirationDate);
+    await this.cvv.fill(dummyCardData.cvv);
+    await this.cardHolderName.fill(dummyCardData.name);
   }
 }

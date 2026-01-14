@@ -40,12 +40,7 @@ test('Add product e2e flow', async ({ loggedInPage }) => {
   // Card Holder Name: any name ->
   // Confirm
   await loggedInPage.paymentPage.selectCreditCard();
-  await loggedInPage.paymentPage.creditCardComponent.fillCreditCardForm(
-    '1111-1111-1111-1111',
-    loggedInPage.paymentPage.addHalfYearFromToday(),
-    '111',
-    'Afanasij',
-  );
+  await loggedInPage.paymentPage.creditCardComponent.fillCreditCardForm();
   await loggedInPage.paymentPage.confirmCheckout();
  
   // Verify that the payment was successful
