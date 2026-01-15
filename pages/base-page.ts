@@ -12,4 +12,12 @@ export class BasePage {
   async navigate(url: string = ''){
     await this.page.goto(url);
   };
+
+  // async authenticateWithToken(token: string): Promise<void> {
+  //   await this.page.goto();
+  //   await this.page.evaluate((t) => {
+  //     localStorage.setItem('auth-token', t);
+  //   }, token);
+  //   await this.page.reload();
+  // }
 }

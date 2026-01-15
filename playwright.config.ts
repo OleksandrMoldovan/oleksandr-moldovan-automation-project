@@ -39,6 +39,12 @@ export default defineConfig({
     { name: 'setup', testMatch: /.*\.setup\.ts/ },
 
     {
+      name: 'api-login',
+      use: { ...devices['Desktop Chrome'], storageState: undefined },
+      testMatch: /week-14-api-login\/.*\.spec\.ts/,
+    },
+
+    {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
