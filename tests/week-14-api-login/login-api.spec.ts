@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
+import {  expect } from '@playwright/test';
+import { test } from '../../fixture';
 
-test('UI login via API token', async ({ page, request }) => {
+test('UI login via API token', async ({ allPages,request }) => {
   const response = await request.post('https://api.practicesoftwaretesting.com/users/login', {
     data: {
       email: 'customer@practicesoftwaretesting.com',
@@ -13,12 +14,7 @@ test('UI login via API token', async ({ page, request }) => {
   const jsonBody = await response.json();
   const token = jsonBody.access_token;
 
-  await page.goto('/');
-  await page.evaluate((t) => {
-    localStorage.setItem('auth-token', t);
-  }, token);
-
-  await page.reload();
-
-  await expect(page.locator('[data-test="nav-menu"]')).toContainText('Jane Doe');
+  await allPages.basePage.authenticateWithToken(token);
+  
+  await expect(allPages.homePage.header.menu).toContainText('Jane Doe');
 });

@@ -8,7 +8,7 @@ test('Add product e2e flow', async ({ loggedInPage }) => {
 
   // Add the first product from the home page to the cart (save product name and price).
   await loggedInPage.homePage.navigate();
-  await loggedInPage.homePage.openFirstProduct();
+  await loggedInPage.homePage.openSpecifiedProduct(1);
   const productData = await loggedInPage.productPage.collectProductData();
 
   // Open the cart and verify that the product name, price, and total price match the added product.
