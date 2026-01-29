@@ -2,8 +2,7 @@ import { test as setup } from '@playwright/test';
 import path from 'path';
 import { LoginPage } from '../../pages/login-page';
 import { credentials } from '../../tests/data/user-creds';
-
-const e2eUser = path.join(path.join(process.cwd(), 'playwright/.auth/e2e-user.json'));
+const e2eUser = path.join(process.cwd(), 'playwright/.auth/e2e-user.json');
 
 setup('authenticate', async ({ page }) => {
   const loginPage = new LoginPage(page);
