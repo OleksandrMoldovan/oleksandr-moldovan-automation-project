@@ -67,28 +67,27 @@ export default defineConfig({
       dependencies: ['setup'],
     },
 
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-        // Use prepared auth state.
-        storageState: 'playwright/.auth/admin.json',
-      },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     // Use prepared auth state.
+    //     storageState: 'playwright/.auth/admin.json',
+    //   },
       
-    },
+    // },
 
     {
       name: 'smoke',
       dependencies: ['setup'],
-      use: { ...devices['Desktop Chrome']  },
+      use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/e2e-user.json' },
       testMatch: /week-15\/.*\.spec\.ts/,
       grep: /@smoke/,
     },
-
     {
       name: 'regression',
       dependencies: ['setup'],
-      use: { ...devices['Desktop Chrome']  },
+      use: { ...devices['Desktop Chrome'], storageState: 'playwright/.auth/e2e-user.json' },
       testMatch: /week-15\/.*\.spec\.ts/,
       grep: /@regression/,
     },

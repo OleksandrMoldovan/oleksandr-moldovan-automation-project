@@ -17,6 +17,7 @@ jobs:
       USER_EMAIL: ${{ vars.USER_EMAIL }}
       USER_NAME: ${{ vars.USER_NAME }}
       USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      TESTOMATIO: ${{ secrets.TESTOMATIO }}
 
     steps:
       - name: Checkout
@@ -34,7 +35,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run regression tests
-        run: npx playwright test --grep "@regression"
+        run: npx playwright test --project=regression
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
