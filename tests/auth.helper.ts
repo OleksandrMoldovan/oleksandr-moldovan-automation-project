@@ -10,7 +10,7 @@ setup('authenticate', async ({ page }) => {
 
   await loginPage.navigate('/auth/login');
 
-  await loginPage.performLogin(credentials.customer.email, credentials.customer.password);
+  await loginPage.performLogin(credentials.customer1.email, credentials.customer1.password);
 
   await page.context().storageState({ path: authAdmin });
 });

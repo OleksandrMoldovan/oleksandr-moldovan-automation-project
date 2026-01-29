@@ -13,12 +13,14 @@
     "test:sort-name-a/desc": "npx playwright test tests/test-4-products-sorting-name.spec.ts --ui",
     "test:sort-price-a/desc": "npx playwright test tests/test-5-products-sorting-price.spec.ts --ui",
     "test:products-filtering": "npx playwright test tests/test-6-products-filtering-by-category.spec.ts --ui",
-    "w:13test:e2e":"npx playwright test tests/week-13/test-2-add-products-e2e.spec.ts --ui",
-    "test:api-login":"npx playwright test tests/week-14-api-login/login-api.spec.ts --project=api-login",
-    "test:mock-20-products":"npx playwright test tests/week-14-api-login/test-1-mock-20-products.spec.ts --project=api-login --ui",
-    
-    "auth":"npx playwright test tests/auth.setup.ts --project=setup",
-    "test": "npx playwright test"
+    "w:13test:e2e": "npx playwright test tests/week-13/test-2-add-products-e2e.spec.ts --ui",
+    "test:api-login": "npx playwright test tests/week-14-api-login/login-api.spec.ts --project=api-login",
+    "test:mock-20-products": "npx playwright test tests/week-14-api-login/test-1-mock-20-products.spec.ts --project=api-login --ui",
+    "auth": "npx playwright test tests/auth.setup.ts --project=setup",
+    "test": "npx playwright test",
+    "smoke": "npx playwright test --project=smoke",
+    "regression": "npx playwright test --project=regression",
+    "testomat:import": "check-tests playwright \"tests/**/*.spec.ts\" --typescript"
   },
   "repository": {
     "type": "git",
@@ -36,11 +38,16 @@
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
     "@stylistic/eslint-plugin": "^5.6.1",
+    "@testomatio/reporter": "^2.6.0",
     "@types/node": "^24.10.1",
+    "check-tests": "^0.15.1",
     "eslint": "^9.39.2",
     "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-playwright": "^2.4.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3"
   }
 }

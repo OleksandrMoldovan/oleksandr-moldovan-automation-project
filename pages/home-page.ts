@@ -3,6 +3,7 @@ import { BasePage } from './base-page';
 import { SortProducts } from '../components/sorting-panel';
 import { FilterPanel } from '../components/filter-panel';
 import {  generateProducts } from '../additional-scripts/mock-product-data-generator';
+import { productToVerify } from '../tests/data/home-page';
 
 export class HomePage extends BasePage {
   readonly productTitles: Locator;
@@ -64,7 +65,7 @@ export class HomePage extends BasePage {
 
   async isProductVisible(){
     
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < productToVerify; i++) {
       await this.productCards.nth(i).toBeVisible();
     }
   

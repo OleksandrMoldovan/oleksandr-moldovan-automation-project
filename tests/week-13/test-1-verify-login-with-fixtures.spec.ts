@@ -1,9 +1,9 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixture';
+import { credentials } from '../data/user-creds';
 
 test('Logged in Admin user is able to navigate the account page', async ({ allPages }) => {
 
-  const name = 'Jane Doe';
   const titleText = 'My account';
 
   await allPages.accountPage.navigate('/account');
@@ -13,5 +13,5 @@ test('Logged in Admin user is able to navigate the account page', async ({ allPa
 
   await expect(allPages.accountPage.titleLocator).toHaveText(titleText);
 
-  await expect(allPages.accountPage.page.locator('a#menu')).toHaveText(name);
+  await expect(allPages.accountPage.header.menu).toHaveText(credentials.customer1.name);
 });

@@ -1,8 +1,8 @@
 import { expect } from '@playwright/test';
 import { test } from '../../fixture';
+import { productToVerify } from '../data/home-page';
 
 test('Mock-data', async ({ allPages }) => {
-  const productToVerify = 20;
 
   await allPages.homePage.mockProducts(productToVerify);
   await allPages.homePage.navigate();

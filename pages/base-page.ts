@@ -14,7 +14,7 @@ export class BasePage {
   };
 
   async authenticateWithToken(token: string): Promise<void> {
-    await this.page.goto();
+    await this.page.goto('/');
     await this.page.evaluate((t) => {
       localStorage.setItem('auth-token', t);
     }, token);
