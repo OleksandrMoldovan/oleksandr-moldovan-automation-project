@@ -1,1 +1,1 @@
-export const pageSize = 9;
+export const productToVerify = 20;
