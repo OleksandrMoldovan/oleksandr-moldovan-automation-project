@@ -15,6 +15,18 @@ interface AuthenticationResponse {
 
 const bodyPreviewLength = 300;
 const sensitiveFieldName = /authorization|cookie|password|secret|token|api[-_]?key/i;
+const sensitiveTextField = [
+  'access[_-]?token',
+  'refresh[_-]?token',
+  'authorization',
+  'password',
+  'secret',
+  'api[_-]?key',
+].join('|');
+const sensitiveTextAssignment = new RegExp(
+  `((?:${sensitiveTextField})\\s*[:=]\\s*)[^\\s,;]+`,
+  'gi',
+);
 
 export class AuthClient {
   constructor(private readonly request: APIRequestContext) {}
@@ -27,7 +39,7 @@ export class AuthClient {
     const response = await this.login(email, password);
 
     if (!response.ok()) {
-      throw new Error(`Login failed. ${await formatAuthenticationResponse(response)}`);
+      throw new Error(`Login failed. ${await formatResponseDiagnostics(response)}`);
     }
 
     // Treat external JSON as untrusted until its required shape is validated.
@@ -36,12 +48,12 @@ export class AuthClient {
     try {
       body = await response.json();
     } catch {
-      throw new Error(`Login response was not valid JSON. ${await formatAuthenticationResponse(response)}`);
+      throw new Error(`Login response was not valid JSON. ${await formatResponseDiagnostics(response)}`);
     }
 
     if (!isLoginResponse(body)) {
       throw new Error(
-        `Login response did not contain a valid access token. ${await formatAuthenticationResponse(response)}`,
+        `Login response did not contain a valid access token. ${await formatResponseDiagnostics(response)}`,
       );
     }
 
@@ -49,7 +61,7 @@ export class AuthClient {
   }
 }
 
-export async function formatAuthenticationResponse(
+export async function formatResponseDiagnostics(
   response: AuthenticationResponse,
 ): Promise<string> {
   const contentType = response.headers()['content-type'] ?? '<missing>';
@@ -64,6 +76,8 @@ export async function formatAuthenticationResponse(
     `body-preview=${JSON.stringify(preview)}`,
   ].join('; ');
 }
+
+export const formatAuthenticationResponse = formatResponseDiagnostics;
 
 async function readResponseBody(response: AuthenticationResponse): Promise<string> {
   try {
@@ -130,12 +144,17 @@ function sanitizeUrl(value: string): string {
 
 function sanitizeTokenLikeText(value: string): string {
   return value
+    .replace(sensitiveTextAssignment, '$1[REDACTED]')
     .replace(/\bBearer\s+[^\s"']+/gi, 'Bearer [REDACTED]')
     .replace(/\beyJ[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\.[A-Za-z0-9_-]{8,}\b/g, '[REDACTED_TOKEN]');
 }
 
 function truncatePreview(value: string): string {
   return value.length <= bodyPreviewLength ? value : `${value.slice(0, bodyPreviewLength)}…`;
+}
+
+export function createSafeDiagnosticPreview(value: string): string {
+  return truncatePreview(sanitizeTokenLikeText(value.replace(/\s+/g, ' ').trim()));
 }
 
 function isLoginResponse(value: unknown): value is LoginResponse {

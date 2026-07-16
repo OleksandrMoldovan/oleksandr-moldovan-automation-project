@@ -1,21 +1,33 @@
-import { expect, type Response } from '@playwright/test';
-import { formatAuthenticationResponse } from '../../../api/auth-client';
+import { expect } from '@playwright/test';
 import { getTestUser } from '../../../config/environment';
+import type { LoginAttempt } from '../../../pages/login-page';
 import { test } from '../../../fixture';
 
-async function getAuthenticationDiagnostics(response: Response | undefined): Promise<string> {
-  return response
-    ? formatAuthenticationResponse(response)
-    : Promise.resolve('No POST response ending in /users/login was observed during UI login.');
+async function createLoginFailure(
+  error: unknown,
+  loginAttempt: LoginAttempt,
+): Promise<Error> {
+  const transitionDiagnostics = await loginAttempt.transitionDiagnostics.complete();
+  const message = error instanceof Error ? error.message : String(error);
+
+  return new Error(
+    `${message}\nLogin response: ${loginAttempt.responseDiagnostics}\n${transitionDiagnostics}`,
+  );
 }
 
 test('user can sign in with valid credentials', { tag: '@regression' }, async ({ allPages }) => {
   const user = getTestUser();
 
-  await allPages.loginPage.navigate(allPages.loginPage.loginPageUrl);
-  const authenticationResponse = await allPages.loginPage.performLogin(user.email, user.password);
-  const diagnostics = await getAuthenticationDiagnostics(authenticationResponse);
+  await allPages.loginPage.navigateToLoginPage();
+  const loginAttempt = await allPages.loginPage.performLogin(user.email, user.password);
 
-  await expect(allPages.loginPage.page, diagnostics).toHaveURL(/\/account/);
-  await expect(allPages.loginPage.header.menu, diagnostics).toHaveText(user.name);
+  try {
+    await expect(allPages.loginPage.page, loginAttempt.responseDiagnostics).toHaveURL(/\/account/);
+    await expect(allPages.loginPage.header.menu, loginAttempt.responseDiagnostics)
+      .toHaveText(user.name);
+  } catch (error: unknown) {
+    throw await createLoginFailure(error, loginAttempt);
+  }
+
+  await loginAttempt.transitionDiagnostics.complete();
 });
