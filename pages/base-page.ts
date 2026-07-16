@@ -9,9 +9,9 @@ export class BasePage {
     this.header = new Header(page);
   }
 
-  async navigate(url: string = '/'){
+  async navigate(url: string = '/'): Promise<void> {
     await this.page.goto(url);
-  };
+  }
 
   async authenticateWithToken(token: string): Promise<void> {
     await this.page.goto('/');

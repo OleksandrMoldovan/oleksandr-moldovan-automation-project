@@ -18,10 +18,10 @@ export class ProductPage extends BasePage {
     this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');//create indep component for it
 
   }
-  async collectProductData(){
+  async collectProductData(): Promise<{ name: string; price: string }> {
     const productData = {
       name: (await this.productName.innerText()),
-      price:(await this.unitPrice.innerText()),
+      price: (await this.unitPrice.innerText()).replace(/[^\d.]/g, ''),
     };
 
     return productData;

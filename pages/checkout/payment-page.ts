@@ -17,13 +17,13 @@ export class PaymentPage extends BasePage{
     this.creditCardComponent = new CreditCard(page);
   }
 
-  async selectPaymentMethod(paymentMethod: string){
+  async selectPaymentMethod(paymentMethod: string): Promise<void> {
     await this.paymentMethods.selectOption(paymentMethod);
   }
-  async selectCreditCard(){
+  async selectCreditCard(): Promise<void> {
     await this.paymentMethods.selectOption('credit-card');
   }
-  async confirmCheckout(){
+  async confirmCheckout(): Promise<void> {
     await this.confirmButton.click();
   }
 }

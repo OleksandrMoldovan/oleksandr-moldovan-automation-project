@@ -1,114 +1,105 @@
-# Web Page Automation
+# Practice Software Testing — Playwright Framework
 
-This project focuses on automating web pages using **Playwright** with **JavaScript/TypeScript**.  
-The code interacts with the browser, manipulates page elements, and automates user actions such as clicking, typing, navigation, and validating page content.
+A TypeScript test-automation portfolio project for
+[Practice Software Testing](https://practicesoftwaretesting.com). The framework combines browser,
+API-assisted, and request-interception coverage with reusable page objects, authenticated fixtures,
+tagged suites, and CI quality gates.
 
----
+## What it covers
 
-## 🔧 Tech Stack
+- UI login and reusable storage-state authentication
+- API login, including a negative authentication scenario
+- Product details and add-to-cart flows
+- Name and price sorting plus category filtering
+- Deterministic product-response interception
+- An end-to-end checkout scenario guarded against accidental execution
 
-- **Language:** JavaScript / TypeScript  
-- **Automation Framework:** Playwright Test Runner  
-- **Supported Browsers:** Chromium, Firefox, WebKit (managed by Playwright)
+The active browser project uses Chromium. Tests are split by domain rather than by course week, and
+each scenario has one canonical implementation.
 
----
+## Architecture
 
-## ✨ Features
+```text
+api/                 typed API clients
+components/          reusable page fragments
+config/              environment and shared paths
+pages/               page objects and checkout screens
+test-data/           deterministic, non-secret scenario inputs
+tests/
+  api/               browser-independent API tests
+  setup/             storage-state authentication setup
+  ui/                account, auth, cart, catalog, and checkout tests
+playwright.config.ts  projects, artifacts, retries, and reporters
+```
 
-- Automated navigation across web pages  
-- Interaction with elements (clicks, typing, checkboxes, form submission)  
-- Built-in Playwright **assertions** for page validation  
-- Scenario recording using `playwright codegen`  
-- Continuous extension of test cases for learning purposes
+Page and component objects describe application behavior. Tests own assertions and select test data.
+The authenticated fixture creates a context from the saved state while preserving Playwright project
+options such as `baseURL`.
 
-> This is an educational project and will grow with new test scenarios over time.
+## Setup
 
----
+Requirements: Node.js 22 or a current LTS release.
 
-## 🚀 Installation & Setup
+```bash
+npm ci
+npx playwright install chromium
+```
 
-### 1. Clone the repository
+Copy `.env.example` to `.env` and provide a dedicated test account:
 
-git clone <repository-url>
-cd <project-name>
+```dotenv
+BASE_URL=https://practicesoftwaretesting.com
+API_URL=https://api.practicesoftwaretesting.com
+USER_EMAIL=your-test-user@example.com
+USER_PASSWORD=replace-me
+USER_NAME=Test User
+ALLOW_CHECKOUT=false
+```
 
-### 2. Install dependencies
+Credentials are required only when an authentication-dependent project runs. They are not committed
+to the repository.
 
-npm install
+## Commands
 
-If Playwright is not installed yet:
+```bash
+npm run typecheck       # strict TypeScript validation
+npm run lint            # ESLint and Playwright rules
+npm run test:list       # inspect discovered tests without running them
+npm test                # all setup, UI, and API tests
+npm run test:ui         # Chromium UI suite
+npm run test:api        # browser-independent API suite
+npm run test:smoke      # @smoke scenarios
+npm run test:regression # @regression scenarios except checkout
+```
 
-npm init -y
-npm install -D @playwright/test
-npx playwright install
+## Safe checkout execution
 
----
+The checkout scenario creates persistent data in the target application. It is excluded from the
+normal regression command and skips unless `ALLOW_CHECKOUT=true` is set for an approved test
+environment with disposable data.
 
-## 📜 npm Scripts
+```bash
+ALLOW_CHECKOUT=true npm run test:checkout
+```
 
-{
-  "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:headed": "playwright test --headed",
-    "codegen": "playwright codegen"
-  }
-}
+PowerShell equivalent:
 
-Usage:
+```powershell
+$env:ALLOW_CHECKOUT='true'; npm run test:checkout
+```
 
-npm test
-npm run test:headed
-npm run test:ui
-npm run codegen
+## Reports and diagnostics
 
----
+HTML, JSON, and console reports are written under `artifacts/`. On failure, Playwright captures a
+screenshot; the first
+retry records video and a trace. GitHub Actions retains HTML reports for 30 days.
 
-## 🧪 Testing
+## Continuous integration
 
-Example test:
+The single `Quality` workflow runs strict type checking and linting before browser work. Pull requests
+run the smoke suite after static checks; pushes to the main branch also run regression coverage. The
+checkout scenario remains disabled in CI.
 
-import { test, expect } from '@playwright/test';
+## License
 
-test('example test', async ({ page }) => {
-  await page.goto('https://example.com');
-  await expect(page).toHaveTitle(/Example/);
-});
-
-Run tests:
-
-npx playwright test
-
----
-
-## 🧱 Project Structure
-
-.
-├── tests/                
-│   └── example.spec.ts
-├── playwright.config.ts  
-├── package.json
-├── package-lock.json
-└── README.md
-
----
-
-## 📈 Roadmap
-
-- Add more real-world user interaction tests  
-- Form validation tests  
-- Login/logout test scenarios  
-- Dynamic page element handling  
-- (Optional) Introduce Page Object Model (POM)
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
-
-## 👤 Author
-
-Oleksandr Moldovan
+MIT

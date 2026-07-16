@@ -14,10 +14,10 @@ export class BillingPage extends BasePage{
     this.proceedToCheckoutButton = this.page.getByTestId('proceed-3');
   }
   
-  async fillInStateData(state: string){
+  async fillInStateData(state: string): Promise<void> {
     await this.state.fill(state);
   }
-  async fillInPostalCodeData(postalCode: string){
+  async fillInPostalCodeData(postalCode: string): Promise<void> {
     await this.postalCode.fill(postalCode);
   }
 }
