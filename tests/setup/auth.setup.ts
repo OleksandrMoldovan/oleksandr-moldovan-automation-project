@@ -11,12 +11,7 @@ setup('authenticate test user', async ({ page }) => {
 
   await mkdir(dirname(authStatePath), { recursive: true });
   await loginPage.navigateToLoginPage();
-  const loginAttempt = await loginPage.performLogin(user.email, user.password);
-
-  try {
-    await page.waitForURL(/\/account/);
-    await page.context().storageState({ path: authStatePath });
-  } finally {
-    await loginAttempt.transitionDiagnostics.complete();
-  }
+  await loginPage.performLogin(user.email, user.password);
+  await page.waitForURL(/\/account/);
+  await page.context().storageState({ path: authStatePath });
 });
