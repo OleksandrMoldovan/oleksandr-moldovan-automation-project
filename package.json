@@ -12,8 +12,7 @@
     "test:smoke": "playwright test --grep @smoke",
     "test:regression": "playwright test --grep @regression --grep-invert @checkout",
     "test:checkout": "playwright test --project=chromium --grep @checkout",
-    "test:list": "playwright test --list",
-    "testomat:import": "check-tests playwright \"tests/**/*.spec.ts\" --typescript"
+    "test:list": "playwright test --list"
   },
   "repository": {
     "type": "git",
@@ -31,11 +30,8 @@
     "@eslint/js": "^9.39.2",
     "@playwright/test": "^1.57.0",
     "@stylistic/eslint-plugin": "^5.6.1",
-    "@testomatio/reporter": "^2.6.0",
     "@types/node": "^24.10.1",
-    "check-tests": "^0.15.1",
     "eslint": "^9.39.2",
-    "eslint-plugin-check-file": "^3.3.1",
     "eslint-plugin-playwright": "^2.4.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.0"

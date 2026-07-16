@@ -3,7 +3,6 @@ import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 import playwright from 'eslint-plugin-playwright';
 import stylistic from '@stylistic/eslint-plugin';
-import checkFile from 'eslint-plugin-check-file';
 
 export default defineConfig(
   {
@@ -21,7 +20,6 @@ export default defineConfig(
   {
     plugins: {
       '@stylistic': stylistic,
-      'check-file': checkFile,
     },
     rules: {
       '@stylistic/indent': ['error', 2],

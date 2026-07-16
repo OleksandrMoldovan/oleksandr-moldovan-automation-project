@@ -80,11 +80,6 @@ npm run test:smoke      # @smoke scenarios
 npm run test:regression # @regression scenarios except checkout
 ```
 
-`npm run testomat:import` retains the optional Testomat.io test-discovery/import integration. Without
-`TESTOMATIO` it performs local static test discovery; when that environment variable contains a valid
-project API key, `check-tests` can send discovered test metadata to Testomat.io. The Testomat.io
-Playwright result reporter is installed but is not currently configured in `playwright.config.ts`.
-
 ## Safe checkout execution
 
 The checkout scenario creates persistent data in the target application. It is excluded from the
