@@ -7,7 +7,6 @@ export class CartPage extends BasePage{
   proceedToCheckoutButton: Locator;
   totalPrice: Locator;
   productPrice: Locator;
-  // cartToCheckout: Locator;
   constructor(page: Page){
     super(page);
     this.cartQuantity = this.page.getByTestId('product-quantity');
@@ -17,10 +16,10 @@ export class CartPage extends BasePage{
     this.productPrice = this.page.getByTestId('product-price');
 
   }
-  async collectCartProductData(){
+  async collectCartProductData(): Promise<{ name: string; price: string }> {
     const productData = {
       name: (await this.productTitle.innerText()).trim(),
-      price:(await this.productPrice.innerText()).replace(/[^\d.]/g, ''),
+      price: (await this.productPrice.innerText()).replace(/[^\d.]/g, ''),
     };
 
     return productData;

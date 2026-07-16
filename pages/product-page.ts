@@ -15,13 +15,13 @@ export class ProductPage extends BasePage {
     this.unitPrice = this.page.getByTestId('unit-price');
     this.addToCartBtn = this.page.locator('#btn-add-to-cart');
     this.addToFavorites = this.page.locator('#btn-add-to-favorites');
-    this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');//create indep component for it
+    this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');
 
   }
-  async collectProductData(){
+  async collectProductData(): Promise<{ name: string; price: string }> {
     const productData = {
       name: (await this.productName.innerText()),
-      price:(await this.unitPrice.innerText()),
+      price: (await this.unitPrice.innerText()).replace(/[^\d.]/g, ''),
     };
 
     return productData;

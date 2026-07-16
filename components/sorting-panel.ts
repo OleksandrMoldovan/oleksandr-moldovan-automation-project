@@ -1,19 +1,17 @@
 import { Locator, Page } from '@playwright/test';
-import { SortTitles, SortPrices } from '../tests/data/sorting-options';
+import { SortPrices, SortTitles } from '../test-data/catalog';
 
-export class SortProducts {
-  private readonly page: Page;
+export class SortingPanel {
   private readonly sortDropDown: Locator;
 
   constructor(page: Page) {
-    this.page = page;
-    this.sortDropDown = this.page.getByTestId('sort');
+    this.sortDropDown = page.getByTestId('sort');
   }
 
-  async sortByTitle(option: SortTitles) {
+  async sortByTitle(option: SortTitles): Promise<void> {
     await this.sortDropDown.selectOption(option);
   }
-  async sortByPrice(option: SortPrices) {
+  async sortByPrice(option: SortPrices): Promise<void> {
     await this.sortDropDown.selectOption(option);
   }
 }

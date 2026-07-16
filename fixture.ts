@@ -1,46 +1,28 @@
-import { test as base, expect,Page } from '@playwright/test';
+import { test as base } from '@playwright/test';
+import { authStatePath } from './config/paths';
 import { AllPages } from './pages/all-pages';
-//import { credentials } from './tests/data/user-creds'; ---- part related to commented example
 
 type MyFixtures = {
   loggedInPage: AllPages;
-  allPages: AllPages
+  allPages: AllPages;
 };
 
 export const test = base.extend<MyFixtures>({
-  loggedInPage: async ({ browser }, use) => {
-    //set up
-    const context = await browser.newContext({ storageState: 'playwright/.auth/e2e-user.json' });
-
+  loggedInPage: async ({ browser, contextOptions }, use) => {
+    // Preserve project options such as baseURL when loading authenticated state.
+    const context = await browser.newContext({
+      ...contextOptions,
+      storageState: authStatePath,
+    });
     const page = await context.newPage();
     const authedPages = new AllPages(page);
 
-    //use fixtures values
     await use(authedPages);
-
     await context.close();
-    //clean up
   },
-  
-  allPages:async({ page },use) => {
-  
+  allPages: async ({ page }, use) => {
     const allPages = new AllPages(page);
 
     await use(allPages);
   },
 });
-
-/// left it as example
-// export const test = base.extend<MyFixtures>({
-//   loggedInPage: async ({ allPages }, use) => {
-//     //set up
-//     console.log('Before');
-
-//     await allPages.loginPage.navigate('/auth/login');
-//     await allPages.loginPage.performLogin(credentials.customer.email,credentials.customer.password);
-
-//     //use fixtures values
-//     await use(allPages);
-//     console.log('After');
-//     //clean up
-//   },

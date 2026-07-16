@@ -1,0 +1,75 @@
+name: Quality
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+
+  smoke:
+    needs: static-checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: test-1
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
+      API_URL: ${{ vars.API_URL }}
+      USER_EMAIL: ${{ vars.USER_EMAIL }}
+      USER_NAME: ${{ vars.USER_NAME }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:smoke
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: smoke-playwright-report
+          path: artifacts/playwright-report/
+          retention-days: 30
+
+  regression:
+    needs: static-checks
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: test-1
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
+      API_URL: ${{ vars.API_URL }}
+      USER_EMAIL: ${{ vars.USER_EMAIL }}
+      USER_NAME: ${{ vars.USER_NAME }}
+      USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:regression
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: regression-playwright-report
+          path: artifacts/playwright-report/
+          retention-days: 30

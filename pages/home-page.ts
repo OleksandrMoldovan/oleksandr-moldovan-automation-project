@@ -1,13 +1,17 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { SortProducts } from '../components/sorting-panel';
+import { SortingPanel } from '../components/sorting-panel';
 import { FilterPanel } from '../components/filter-panel';
-import {  generateProducts } from '../additional-scripts/mock-product-data-generator';
-import { productToVerify } from '../tests/data/home-page';
+import { createMockProducts } from '../test-data/mock-products';
+
+interface ProductSummary {
+  name: string;
+  price: string;
+}
 
 export class HomePage extends BasePage {
   readonly productTitles: Locator;
-  readonly sortPanel: SortProducts;
+  readonly sortPanel: SortingPanel;
   readonly filterPanel: FilterPanel;
   readonly productPrices: Locator;
   readonly productCards: Locator;
@@ -17,12 +21,20 @@ export class HomePage extends BasePage {
     this.productTitles = this.page.getByTestId('product-name');
     this.productPrices = this.page.getByTestId('product-price');
     this.productCards = this.page.locator('a[data-test^="product-"]');
-    this.sortPanel = new SortProducts(page);
+    this.sortPanel = new SortingPanel(page);
     this.filterPanel = new FilterPanel(page);
   }
-  async clickProduct(productNameToNavigate: string) {
-    
-    await this.page.locator(`.card-img-top[alt = '${productNameToNavigate}']`).click();
+  async getFirstProductSummary(): Promise<ProductSummary> {
+    const card = this.productCards.first();
+
+    return {
+      name: (await card.getByTestId('product-name').innerText()).trim(),
+      price: (await card.getByTestId('product-price').innerText()).replace(/[^0-9.]/g, ''),
+    };
+  }
+
+  async openFirstProduct(): Promise<void> {
+    await this.productCards.first().click();
   }
 
   async getProductTitles(): Promise<string[]> {
@@ -37,38 +49,25 @@ export class HomePage extends BasePage {
     return raw.map(v => Number(v.replace(/[^0-9.]/g, '')));
 
   }
-  async openSpecifiedProduct(productNumber: number){
-    await this.page.locator(`a.card:nth-child(${productNumber})`).click();
-  }
-
   async mockProducts(productAmount: number): Promise<void> {
+    const products = createMockProducts(productAmount);
+
+    // Fulfill directly so the mock remains deterministic and independent of the live API.
     await this.page.route('**/products*', async (route) => {
-      const response = await route.fetch();
-      const json = await response.json();
-
-      const trimmed = generateProducts(productAmount);
-
       await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
         json: {
-          ...json,
-          data: trimmed,
+          data: products,
           total: productAmount,
           from: 1,
-          to: trimmed.length,
+          to: products.length,
           current_page: 1,
           last_page: 1,
           per_page: productAmount,
         },
       });
     });
-  }
-
-  async isProductVisible(){
-    
-    for (let i = 0; i < productToVerify; i++) {
-      await this.productCards.nth(i).toBeVisible();
-    }
-  
   }
 
 }

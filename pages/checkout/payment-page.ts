@@ -1,29 +1,24 @@
-import { CreditCard } from '../../components/payment-page-components/credit-card-component';
+import { CreditCardForm } from '../../components/credit-card-form';
 import { BasePage } from '../base-page';
 import { Locator, Page } from '@playwright/test';
 
 export class PaymentPage extends BasePage{
   paymentMethods: Locator;
-  productTitle: Locator;
   confirmButton: Locator;
   successMessage: Locator;
-  creditCardComponent: CreditCard;
+  creditCardForm: CreditCardForm;
   constructor(page: Page){
     super(page);
     this.paymentMethods = this.page.locator('#payment-method');
-    this.productTitle = this.page.locator('[data-test="product-title"]');
     this.confirmButton = this.page.getByTestId('finish');
     this.successMessage = this.page.getByTestId('payment-success-message');
-    this.creditCardComponent = new CreditCard(page);
+    this.creditCardForm = new CreditCardForm(page);
   }
 
-  async selectPaymentMethod(paymentMethod: string){
-    await this.paymentMethods.selectOption(paymentMethod);
-  }
-  async selectCreditCard(){
+  async selectCreditCard(): Promise<void> {
     await this.paymentMethods.selectOption('credit-card');
   }
-  async confirmCheckout(){
+  async confirmCheckout(): Promise<void> {
     await this.confirmButton.click();
   }
 }

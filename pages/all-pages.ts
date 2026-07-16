@@ -3,14 +3,13 @@ import { BasePage } from './base-page';
 import { CartPage } from './checkout/cart-page';
 import { LoginPage } from './login-page';
 import { HomePage } from './home-page';
-import { AccountPage } from './my-account-page';
+import { AccountPage } from './account-page';
 import { ProductPage } from './product-page';
 import { SignInPage } from './checkout/sign-in-page';
 import { PaymentPage } from './checkout/payment-page';
 import { BillingPage } from './checkout/billing-page';
 
 export class AllPages{
-  page: Page;
   basePage: BasePage;
   loginPage: LoginPage;
   cartPage: CartPage;
@@ -21,7 +20,6 @@ export class AllPages{
   paymentPage: PaymentPage;
   billingPage: BillingPage;
   constructor(page: Page){
-    this.page = page;
     this.basePage = new BasePage(page);
     this.loginPage = new LoginPage(page);
     this.cartPage = new CartPage(page);
