@@ -11,4 +11,3 @@ export class FilterPanel{
     await this.page.getByRole('checkbox', { name: filterOption, exact: true }).check(); 
   }
 }
-

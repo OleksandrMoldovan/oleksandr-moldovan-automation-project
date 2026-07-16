@@ -56,8 +56,16 @@ USER_NAME=Test User
 ALLOW_CHECKOUT=false
 ```
 
-Credentials are required only when an authentication-dependent project runs. They are not committed
-to the repository.
+`USER_EMAIL`, `USER_PASSWORD`, and `USER_NAME` are required for the current Chromium UI project and
+for the positive API authentication test. `BASE_URL` and `API_URL` are optional and default to the
+public Practice Software Testing endpoints shown above. Credentials are not committed to the
+repository.
+
+The Chromium project currently depends on `tests/setup/auth.setup.ts`, so every command that selects
+Chromium UI tests also runs authentication setup, including `npm test`, `npm run test:ui`,
+`npm run test:smoke`, `npm run test:regression`, and `npm run test:checkout`. Separating public and
+authenticated UI execution is a future improvement; public catalog tests cannot currently be run
+through the Chromium project without configured credentials.
 
 ## Commands
 
@@ -71,6 +79,11 @@ npm run test:api        # browser-independent API suite
 npm run test:smoke      # @smoke scenarios
 npm run test:regression # @regression scenarios except checkout
 ```
+
+`npm run testomat:import` retains the optional Testomat.io test-discovery/import integration. Without
+`TESTOMATIO` it performs local static test discovery; when that environment variable contains a valid
+project API key, `check-tests` can send discovered test metadata to Testomat.io. The Testomat.io
+Playwright result reporter is installed but is not currently configured in `playwright.config.ts`.
 
 ## Safe checkout execution
 
