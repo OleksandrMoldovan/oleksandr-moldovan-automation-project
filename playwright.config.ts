@@ -1,4 +1,5 @@
 import { baseUrl } from './config/environment';
+import { authStatePath } from './config/paths';
 import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
@@ -22,19 +23,33 @@ export default defineConfig({
 
   projects: [
     {
-      name: 'setup',
-      testMatch: /setup\/.*\.setup\.ts/,
-    },
-    {
-      name: 'chromium',
-      testMatch: /ui\/.*\.spec\.ts/,
-      use: { ...devices['Desktop Chrome'] },
-      // All UI tests currently run setup; public/authenticated projects can be split later.
-      dependencies: ['setup'],
-    },
-    {
       name: 'api',
-      testMatch: /api\/.*\.spec\.ts/,
+      testMatch: 'api/**/*.spec.ts',
+    },
+    {
+      name: 'setup',
+      testMatch: 'setup/**/*.setup.ts',
+    },
+    {
+      name: 'public-chromium',
+      testMatch: [
+        'ui/auth/**/*.spec.ts',
+        'ui/cart/**/*.spec.ts',
+        'ui/catalog/**/*.spec.ts',
+      ],
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'authenticated-chromium',
+      testMatch: [
+        'ui/account/**/*.spec.ts',
+        'ui/checkout/**/*.spec.ts',
+      ],
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: authStatePath,
+      },
+      dependencies: ['setup'],
     },
   ],
 });
