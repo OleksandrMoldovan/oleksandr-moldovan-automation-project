@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, Response } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export class LoginPage extends BasePage{
@@ -16,14 +16,30 @@ export class LoginPage extends BasePage{
     
   }
 
-  async performLogin(email: string, password: string): Promise<void> {
+  async performLogin(email: string, password: string): Promise<Response | undefined> {
+    let authenticationResponse: Response | undefined;
+    const captureAuthenticationResponse = (response: Response) => {
+      const isLoginRequest = response.request().method() === 'POST'
+        && new URL(response.url()).pathname.endsWith('/users/login');
+
+      if (isLoginRequest) {
+        authenticationResponse = response;
+      }
+    };
+
+    this.page.on('response', captureAuthenticationResponse);
     await this.emailLocator.fill(email);
     await this.passwordLocator.fill(password);
 
-    await Promise.all([
-      this.page.waitForURL(url => !url.toString().includes('/auth/login'), { timeout: 15_000 }),
-      this.submitBtnLocator.click(),
-    ]);
+    try {
+      await Promise.all([
+        this.page.waitForURL(url => !url.toString().includes('/auth/login'), { timeout: 15_000 }),
+        this.submitBtnLocator.click(),
+      ]);
+    } finally {
+      this.page.off('response', captureAuthenticationResponse);
+    }
 
+    return authenticationResponse;
   }
 }
