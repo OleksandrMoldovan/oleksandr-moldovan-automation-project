@@ -15,7 +15,7 @@ export class ProductPage extends BasePage {
     this.unitPrice = this.page.getByTestId('unit-price');
     this.addToCartBtn = this.page.locator('#btn-add-to-cart');
     this.addToFavorites = this.page.locator('#btn-add-to-favorites');
-    this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');//create indep component for it
+    this.productAddedMessage = this.page.locator('#toast-container').getByRole('alert');
 
   }
   async collectProductData(): Promise<{ name: string; price: string }> {

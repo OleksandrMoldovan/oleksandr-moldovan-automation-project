@@ -19,6 +19,7 @@ export class AuthClient {
       throw new Error(`Login failed with status ${response.status()}.`);
     }
 
+    // Treat external JSON as untrusted until its required shape is validated.
     const body: unknown = await response.json();
 
     if (!isLoginResponse(body)) {

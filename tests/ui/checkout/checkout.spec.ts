@@ -5,6 +5,7 @@ import { test } from '../../../fixture';
 test('authenticated user can complete checkout', { tag: ['@regression', '@checkout'] }, async ({
   loggedInPage,
 }) => {
+  // Checkout creates persistent server data, so execution requires explicit opt-in.
   // eslint-disable-next-line playwright/no-skipped-test
   test.skip(
     process.env.ALLOW_CHECKOUT !== 'true',

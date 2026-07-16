@@ -7,7 +7,6 @@ export class CartPage extends BasePage{
   proceedToCheckoutButton: Locator;
   totalPrice: Locator;
   productPrice: Locator;
-  // cartToCheckout: Locator;
   constructor(page: Page){
     super(page);
     this.cartQuantity = this.page.getByTestId('product-quantity');

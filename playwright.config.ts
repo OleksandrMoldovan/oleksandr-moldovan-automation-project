@@ -1,17 +1,5 @@
 import { baseUrl } from './config/environment';
 import { defineConfig, devices } from '@playwright/test';
-
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * See https://playwright.dev/docs/test-configuration.
- */
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
@@ -40,6 +28,7 @@ export default defineConfig({
       name: 'chromium',
       testMatch: /ui\/.*\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
+      // All UI tests currently run setup; public/authenticated projects can be split later.
       dependencies: ['setup'],
     },
     {

@@ -4,7 +4,7 @@ import { SortProducts } from '../components/sorting-panel';
 import { FilterPanel } from '../components/filter-panel';
 import { createMockProducts } from '../test-data/mock-products';
 
-export interface ProductSummary {
+interface ProductSummary {
   name: string;
   price: string;
 }
@@ -24,14 +24,6 @@ export class HomePage extends BasePage {
     this.sortPanel = new SortProducts(page);
     this.filterPanel = new FilterPanel(page);
   }
-  async openProduct(productName: string): Promise<void> {
-    const card = this.productCards.filter({ has: this.page.getByTestId('product-name').filter({
-      hasText: productName,
-    }) });
-
-    await card.click();
-  }
-
   async getFirstProductSummary(): Promise<ProductSummary> {
     const card = this.productCards.first();
 
@@ -60,6 +52,7 @@ export class HomePage extends BasePage {
   async mockProducts(productAmount: number): Promise<void> {
     const products = createMockProducts(productAmount);
 
+    // Fulfill directly so the mock remains deterministic and independent of the live API.
     await this.page.route('**/products*', async (route) => {
       await route.fulfill({
         status: 200,

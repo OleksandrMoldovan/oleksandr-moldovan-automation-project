@@ -10,7 +10,6 @@ import { PaymentPage } from './checkout/payment-page';
 import { BillingPage } from './checkout/billing-page';
 
 export class AllPages{
-  page: Page;
   basePage: BasePage;
   loginPage: LoginPage;
   cartPage: CartPage;
@@ -21,7 +20,6 @@ export class AllPages{
   paymentPage: PaymentPage;
   billingPage: BillingPage;
   constructor(page: Page){
-    this.page = page;
     this.basePage = new BasePage(page);
     this.loginPage = new LoginPage(page);
     this.cartPage = new CartPage(page);
