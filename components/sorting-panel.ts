@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { SortPrices, SortTitles } from '../test-data/catalog';
 
-export class SortProducts {
+export class SortingPanel {
   private readonly sortDropDown: Locator;
 
   constructor(page: Page) {

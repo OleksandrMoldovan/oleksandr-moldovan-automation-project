@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './base-page';
-import { SortProducts } from '../components/sorting-panel';
+import { SortingPanel } from '../components/sorting-panel';
 import { FilterPanel } from '../components/filter-panel';
 import { createMockProducts } from '../test-data/mock-products';
 
@@ -11,7 +11,7 @@ interface ProductSummary {
 
 export class HomePage extends BasePage {
   readonly productTitles: Locator;
-  readonly sortPanel: SortProducts;
+  readonly sortPanel: SortingPanel;
   readonly filterPanel: FilterPanel;
   readonly productPrices: Locator;
   readonly productCards: Locator;
@@ -21,7 +21,7 @@ export class HomePage extends BasePage {
     this.productTitles = this.page.getByTestId('product-name');
     this.productPrices = this.page.getByTestId('product-price');
     this.productCards = this.page.locator('a[data-test^="product-"]');
-    this.sortPanel = new SortProducts(page);
+    this.sortPanel = new SortingPanel(page);
     this.filterPanel = new FilterPanel(page);
   }
   async getFirstProductSummary(): Promise<ProductSummary> {

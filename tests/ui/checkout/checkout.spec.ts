@@ -28,7 +28,7 @@ test('authenticated user can complete checkout', { tag: ['@regression', '@checko
   await loggedInPage.billingPage.fillInStateData(checkoutData.state);
   await loggedInPage.billingPage.proceedToCheckoutButton.click();
   await loggedInPage.paymentPage.selectCreditCard();
-  await loggedInPage.paymentPage.creditCardComponent.fillCreditCardForm(checkoutData.card);
+  await loggedInPage.paymentPage.creditCardForm.fill(checkoutData.card);
   await loggedInPage.paymentPage.confirmCheckout();
 
   await expect(loggedInPage.paymentPage.successMessage).toContainText(/successful/i);

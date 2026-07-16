@@ -1,4 +1,4 @@
-import { CreditCard } from '../../components/payment-page-components/credit-card-component';
+import { CreditCardForm } from '../../components/credit-card-form';
 import { BasePage } from '../base-page';
 import { Locator, Page } from '@playwright/test';
 
@@ -6,13 +6,13 @@ export class PaymentPage extends BasePage{
   paymentMethods: Locator;
   confirmButton: Locator;
   successMessage: Locator;
-  creditCardComponent: CreditCard;
+  creditCardForm: CreditCardForm;
   constructor(page: Page){
     super(page);
     this.paymentMethods = this.page.locator('#payment-method');
     this.confirmButton = this.page.getByTestId('finish');
     this.successMessage = this.page.getByTestId('payment-success-message');
-    this.creditCardComponent = new CreditCard(page);
+    this.creditCardForm = new CreditCardForm(page);
   }
 
   async selectCreditCard(): Promise<void> {
