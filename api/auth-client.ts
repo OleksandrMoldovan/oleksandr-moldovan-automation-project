@@ -16,7 +16,7 @@ export class AuthClient {
     const response = await this.login(email, password);
 
     if (!response.ok()) {
-      throw new Error(`Login failed with status ${response.status()}.`);
+      throw new Error(`Login failed: ${response.status()} ${response.statusText()}`);
     }
 
     // Treat external JSON as untrusted until its required shape is validated.

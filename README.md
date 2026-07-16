@@ -83,7 +83,16 @@ npm run test:ui         # public and authenticated Chromium UI projects
 npm run test:api        # browser-independent API suite
 npm run test:smoke      # @smoke scenarios
 npm run test:regression # @regression scenarios except checkout
+npm run test:ci:smoke   # stable public smoke selection used by GitHub Actions
+npm run test:ci:regression # stable public regression selection used by GitHub Actions
 ```
+
+The normal smoke and regression commands include real API, UI, and saved-state authentication
+coverage. Required GitHub Actions jobs use CI-specific selections that exclude tests depending on the
+public demo's real authentication services. GitHub-hosted runner IPs can receive Cloudflare challenge
+responses, and the shared demo can return inconsistent `/users/login` or `/users/me` responses; those
+environment-specific failures do not provide a reliable required-merge signal. Authentication tests
+remain enabled for local and explicitly targeted execution.
 
 ## Safe checkout execution
 
@@ -110,8 +119,9 @@ retry records video and a trace. GitHub Actions retains HTML reports for 30 days
 ## Continuous integration
 
 The single `Quality` workflow runs strict type checking and linting before browser work. Pull requests
-run the smoke suite after static checks; pushes to the main branch also run regression coverage. The
-checkout scenario remains disabled in CI.
+run the stable CI smoke selection after static checks; pushes to the main branch also run the stable
+CI regression selection. Real external-authentication coverage remains in the normal local suites,
+and checkout remains disabled in CI.
 
 ## License
 

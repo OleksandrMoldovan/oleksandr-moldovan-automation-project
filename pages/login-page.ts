@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { expect, Page, Locator } from '@playwright/test';
 import { BasePage } from './base-page';
 
 export class LoginPage extends BasePage{
@@ -16,6 +16,11 @@ export class LoginPage extends BasePage{
     
   }
 
+  async navigateToLoginPage(): Promise<void> {
+    await this.page.goto(this.loginPageUrl);
+    await expect(this.emailLocator).toBeVisible();
+  }
+
   async performLogin(email: string, password: string): Promise<void> {
     await this.emailLocator.fill(email);
     await this.passwordLocator.fill(password);
@@ -24,6 +29,5 @@ export class LoginPage extends BasePage{
       this.page.waitForURL(url => !url.toString().includes('/auth/login'), { timeout: 15_000 }),
       this.submitBtnLocator.click(),
     ]);
-
   }
 }

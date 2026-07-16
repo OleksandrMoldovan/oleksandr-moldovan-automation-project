@@ -39,7 +39,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:smoke
+      # GitHub-hosted runner IPs can receive Cloudflare challenges from the public demo.
+      - run: npm run test:ci:smoke
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
@@ -66,7 +67,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:regression
+      # Keep real authentication in local suites; required CI runs stable public coverage only.
+      - run: npm run test:ci:regression
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

@@ -158,6 +158,11 @@ Do not change tags or suite membership unless the task explicitly requires it.
 
 Normal regression execution must continue to exclude `@checkout`.
 
+Required GitHub Actions jobs use CI-specific smoke and regression selections that exclude real
+external authentication. GitHub-hosted runner IPs can receive Cloudflare challenges, and the shared
+demo authentication endpoints are not a reliable merge gate. Keep authentication tests enabled in
+the normal local smoke and regression commands.
+
 ## Checkout safety
 
 Checkout mutates shared server data.

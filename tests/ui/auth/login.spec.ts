@@ -5,7 +5,7 @@ import { test } from '../../../fixture';
 test('user can sign in with valid credentials', { tag: '@regression' }, async ({ allPages }) => {
   const user = getTestUser();
 
-  await allPages.loginPage.navigate(allPages.loginPage.loginPageUrl);
+  await allPages.loginPage.navigateToLoginPage();
   await allPages.loginPage.performLogin(user.email, user.password);
 
   await expect(allPages.loginPage.page).toHaveURL(/\/account/);
