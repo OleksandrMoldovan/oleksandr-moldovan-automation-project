@@ -14,8 +14,8 @@ tagged suites, and CI quality gates.
 - Deterministic product-response interception
 - An end-to-end checkout scenario guarded against accidental execution
 
-The active browser project uses Chromium. Tests are split by domain rather than by course week, and
-each scenario has one canonical implementation.
+The browser projects use Chromium. Public-session tests are isolated from tests that start with a
+saved authenticated state, and each scenario has one canonical implementation.
 
 ## Architecture
 
@@ -33,8 +33,8 @@ playwright.config.ts  projects, artifacts, retries, and reporters
 ```
 
 Page and component objects describe application behavior. Tests own assertions and select test data.
-The authenticated fixture creates a context from the saved state while preserving Playwright project
-options such as `baseURL`.
+The authenticated project loads the canonical saved state; public UI and API projects do not depend
+on authentication setup.
 
 ## Setup
 
@@ -56,16 +56,21 @@ USER_NAME=Test User
 ALLOW_CHECKOUT=false
 ```
 
-`USER_EMAIL`, `USER_PASSWORD`, and `USER_NAME` are required for the current Chromium UI project and
-for the positive API authentication test. `BASE_URL` and `API_URL` are optional and default to the
-public Practice Software Testing endpoints shown above. Credentials are not committed to the
-repository.
+`USER_EMAIL`, `USER_PASSWORD`, and `USER_NAME` are required by authentication-flow tests, the positive
+API authentication test, and authenticated UI setup. `BASE_URL` and `API_URL` are optional and
+default to the public Practice Software Testing endpoints shown above. Credentials are not committed
+to the repository.
 
-The Chromium project currently depends on `tests/setup/auth.setup.ts`, so every command that selects
-Chromium UI tests also runs authentication setup, including `npm test`, `npm run test:ui`,
-`npm run test:smoke`, `npm run test:regression`, and `npm run test:checkout`. Separating public and
-authenticated UI execution is a future improvement; public catalog tests cannot currently be run
-through the Chromium project without configured credentials.
+Playwright separates execution into four projects:
+
+- `api` runs browser-independent API tests without authentication setup or browser storage state.
+- `setup` generates the canonical authentication state in `playwright/.auth/`.
+- `public-chromium` runs auth-flow, cart, and catalog tests in clean browser contexts without setup.
+- `authenticated-chromium` runs account and checkout tests using the saved state and depends on
+  `setup`.
+
+Commands that select an authenticated test also select its setup dependency. Public Chromium and API
+tests do not trigger setup.
 
 ## Commands
 
@@ -74,7 +79,7 @@ npm run typecheck       # strict TypeScript validation
 npm run lint            # ESLint and Playwright rules
 npm run test:list       # inspect discovered tests without running them
 npm test                # all setup, UI, and API tests
-npm run test:ui         # Chromium UI suite
+npm run test:ui         # public and authenticated Chromium UI projects
 npm run test:api        # browser-independent API suite
 npm run test:smoke      # @smoke scenarios
 npm run test:regression # @regression scenarios except checkout

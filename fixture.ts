@@ -1,5 +1,4 @@
 import { test as base } from '@playwright/test';
-import { authStatePath } from './config/paths';
 import { AllPages } from './pages/all-pages';
 
 type MyFixtures = {
@@ -8,17 +7,10 @@ type MyFixtures = {
 };
 
 export const test = base.extend<MyFixtures>({
-  loggedInPage: async ({ browser, contextOptions }, use) => {
-    // Preserve project options such as baseURL when loading authenticated state.
-    const context = await browser.newContext({
-      ...contextOptions,
-      storageState: authStatePath,
-    });
-    const page = await context.newPage();
+  loggedInPage: async ({ page }, use) => {
     const authedPages = new AllPages(page);
 
     await use(authedPages);
-    await context.close();
   },
   allPages: async ({ page }, use) => {
     const allPages = new AllPages(page);
