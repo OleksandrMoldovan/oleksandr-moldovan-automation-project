@@ -48,7 +48,6 @@ jobs:
 
   regression:
     needs: static-checks
-    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     environment: test-1
